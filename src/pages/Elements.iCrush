@@ -1,9 +1,16 @@
 <template>
     <div class='view' id='page-elements-view'>
-        <div class='element' id='page-elements-view_element'>
+        <div class='element contbody' id='page-elements-view_element'>
             <ul></ul>
         </div>
-        <div class="styles" id='page-elements-view_style'></div>
+        <div class="styles contbody">
+            <ul id='page-elements-view_style'>
+
+            </ul>
+        </div>
+        <div class="searchDiv">
+            <input type="text" i-model="searchText" @input="watchSearch">
+        </div>
     </div>
 </template>
 <script>
@@ -12,6 +19,11 @@
     import $$ from 'image2d';
 
     export default {
+        data() {
+            return {
+                searchText:"",
+            }
+        },
         mounted() {
             this.showStyle(document.getElementsByTagName('html')[0]);
             this.doit(document.getElementsByTagName('html'), this.$document.getElementById('page-elements-view_element'));
@@ -37,16 +49,14 @@
 
             },
             showStyle(el) {
-
                 let styles = $$(el).css(), template = "";
 
                 // 拼接样式
-                template += "<ul>"
                 for (let i = 0; i < styles.length; i++) {
-                    template += "<li><i style='color:red'>" + styles[i] + "</i>=<i style='color:green'>" + styles[styles[i]] + "</i></li>";
+                    template += "<li flag='"+ styles[i] +"'><i style='color:red'>" + styles[i] + "</i>=<i style='color:green'>" + styles[styles[i]] + "</i></li>";
                 }
 
-                this.$document.getElementById('page-elements-view_style').innerHTML = template + "</ul>";
+                this.$document.getElementById('page-elements-view_style').innerHTML = template;
             },
             doit(targetEls, mountEl) {
 
@@ -84,13 +94,29 @@
                     });
                 };
 
+            },
+            watchSearch(){
+                if (this.searchText || this.searchText=="0") {
+                    let lis = $$('li',this.$document.getElementById('page-elements-view_style'));
+                    for (let i = 0; i < lis.length; i++) {
+                        let item = lis[i];
+                        if (item.getAttribute("flag").indexOf(this.searchText) > -1) {
+                            item.style.display = "block";
+                        }else{
+                            item.style.display = "none";
+                        }
+                    }
+                }else{
+                    $$('li',this.$document.getElementById('page-elements-view_style')).css("display","block");
+                }
             }
+
         }
     };
 </script>
 <style>
-    div.view>div {
-        height: calc(50vh - 20px);
+    div.view>div.contbody {
+        height: calc(50vh - 30px);
         overflow: auto;
         width: 100vw;
     }
@@ -98,4 +124,13 @@
     div.view>div.element {
         background-color: white;
     }
+    div.view .searchDiv{
+        height: 20px;
+    }
+    div.view .searchDiv>input{
+        height: 100%;
+        width: 100%;
+        outline: none;
+    }
+
 </style>
