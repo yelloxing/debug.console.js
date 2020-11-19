@@ -52,7 +52,8 @@
                 let iframe = document.getElementById('@yelloxing/debugger/iframe');
                 if (this.isHidden) {
                     iframe.style.width = '100vw';
-                    iframe.style.height = '100vh';
+                    iframe.style.height = window.innerHeight + "px";
+                    iframe.style.maxHeight = "100vh";
                     iframe.style.backgroundColor = '#e0d7d7';
                 } else {
                     iframe.style.width = '50px';

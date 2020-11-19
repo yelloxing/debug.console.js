@@ -43,6 +43,12 @@ iframeDocument.close();
 
 iCrush.prototype.$document = iframeDocument;
 
+// 监听屏幕缩放，改变iframe的大小
+// 主要是为了适配部分特殊手机浏览器底部存在虚拟按钮
+window.addEventListener('resize', () => {
+    document.getElementById('@yelloxing/debugger/iframe').style.height = window.innerHeight + "px";
+});
+
 new iCrush({
 
     //挂载点

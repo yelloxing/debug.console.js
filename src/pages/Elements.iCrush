@@ -155,7 +155,7 @@
     }
 
     div.view .searchDiv {
-        height: 34px;
+        height: 35px;
     }
 
     div.view .searchDiv>input {
