@@ -132,7 +132,7 @@
         top: 36px;
         width: 100vw;
         left: 0;
-        background-color: rgb(215 212 212);
+        background-color: #e0d7d7;
         padding-top: 10px;
     }
 

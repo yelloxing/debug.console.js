@@ -1,15 +1,14 @@
 <template>
     <div class='view' id='page-elements-view'>
         <div class='element contbody' id='page-elements-view_element'>
-            <ul></ul>
+            <div class="refresh" @click='init()'>刷新</div>
+            <ul id='page-elements-view_element_ul'></ul>
         </div>
         <div class="styles contbody">
-            <ul id='page-elements-view_style'>
-
-            </ul>
+            <ul id='page-elements-view_style'></ul>
         </div>
         <div class="searchDiv">
-            <input type="text" i-model="searchText" @input="watchSearch">
+            <input type="text" i-model="searchText" @input="watchSearch" placeholder="您可以输入进行筛选显示">
         </div>
     </div>
 </template>
@@ -21,14 +20,25 @@
     export default {
         data() {
             return {
-                searchText:"",
+                searchText: "",
             }
         },
         mounted() {
-            this.showStyle(document.getElementsByTagName('html')[0]);
-            this.doit(document.getElementsByTagName('html'), this.$document.getElementById('page-elements-view_element'));
+            this.init();
         },
         methods: {
+            init() {
+
+                // 初始化
+                this.$document.getElementById('page-elements-view_element_ul').innerHTML = "";
+                this.$document.getElementById('page-elements-view_style').innerHTML = "<li style='color:gray;text-align:center;line-height:calc(50vh - 55px);'>点击上面的结点会显示对应样式</li>";
+
+                // 重新加载
+                let element = this.$document.getElementById('page-elements-view_element');
+                element.setAttribute('hadLoad', 'no');
+                element.setAttribute('isOpen', 'no');
+                this.doit(document.getElementsByTagName('html'), element);
+            },
             getTemplate(el) {
 
                 // 文本结点
@@ -48,12 +58,17 @@
                 // 别的直接忽略了，因为空间不足，无意义的信息不显示
 
             },
-            showStyle(el) {
+            showStyle(el, li) {
+
+                // 标签当前选中标签
+                $$('li', this.$document.getElementById('page-elements-view_element')).attr('isSelect', 'no');
+                li.setAttribute('isSelect', 'yes');
+
                 let styles = $$(el).css(), template = "";
 
                 // 拼接样式
                 for (let i = 0; i < styles.length; i++) {
-                    template += "<li flag='"+ styles[i] +"'><i style='color:red'>" + styles[i] + "</i>=<i style='color:green'>" + styles[styles[i]] + "</i></li>";
+                    template += "<li flag='" + styles[i] + "'><i style='color:red'>" + styles[i] + "</i>=<i style='color:green'>" + styles[styles[i]] + "</i></li>";
                 }
 
                 this.$document.getElementById('page-elements-view_style').innerHTML = template;
@@ -89,25 +104,25 @@
 
                 for (let i = 0; i < lis.length; i++) {
                     $$('span', lis[i]).bind('click', event => {
-                        this.showStyle(targetEls[i]);
+                        this.showStyle(targetEls[i], lis[i]);
                         this.doit(targetEls[i].childNodes, lis[i]);
                     });
                 };
 
             },
-            watchSearch(){
-                if (this.searchText || this.searchText=="0") {
-                    let lis = $$('li',this.$document.getElementById('page-elements-view_style'));
+            watchSearch() {
+                if (this.searchText || this.searchText == "0") {
+                    let lis = $$('li', this.$document.getElementById('page-elements-view_style'));
                     for (let i = 0; i < lis.length; i++) {
                         let item = lis[i];
                         if (item.getAttribute("flag").indexOf(this.searchText) > -1) {
                             item.style.display = "block";
-                        }else{
+                        } else {
                             item.style.display = "none";
                         }
                     }
-                }else{
-                    $$('li',this.$document.getElementById('page-elements-view_style')).css("display","block");
+                } else {
+                    $$('li', this.$document.getElementById('page-elements-view_style')).css("display", "block");
                 }
             }
 
@@ -116,21 +131,37 @@
 </script>
 <style>
     div.view>div.contbody {
-        height: calc(50vh - 30px);
+        height: calc(50vh - 35px);
         overflow: auto;
         width: 100vw;
+        padding: 10px;
+    }
+
+    div.view>div.contbody>.refresh {
+        position: fixed;
+        width: 50px;
+        height: 50px;
+        right: 0;
+        top: calc(50vh - 60px);
+        background-image: url('../assets/refresh.png');
+        background-size: auto 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        font-size: 0;
     }
 
     div.view>div.element {
-        background-color: white;
+        background-color: rgb(209, 202, 202);
     }
-    div.view .searchDiv{
-        height: 20px;
+
+    div.view .searchDiv {
+        height: 34px;
     }
-    div.view .searchDiv>input{
+
+    div.view .searchDiv>input {
         height: 100%;
         width: 100%;
         outline: none;
+        padding-left: 10px;
     }
-
 </style>

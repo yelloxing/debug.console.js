@@ -20,3 +20,8 @@
 #page-elements-view>.element li[isOpen='yes'] {
   background-image: url('../assets/down.png');
 }
+
+#page-elements-view>.element li[isSelect='yes'],
+#page-elements-view>.element li[isSelect='yes'] span {
+  background-color: white;
+}

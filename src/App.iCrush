@@ -53,7 +53,7 @@
                 if (this.isHidden) {
                     iframe.style.width = '100vw';
                     iframe.style.height = '100vh';
-                    iframe.style.backgroundColor = 'rgb(215 212 212)';
+                    iframe.style.backgroundColor = '#e0d7d7';
                 } else {
                     iframe.style.width = '50px';
                     iframe.style.height = '50px';
@@ -80,7 +80,7 @@
 </script>
 <style>
     ul.content-view {
-        height: calc(100vh - 40px);
+        height: calc(100vh - 36px);
         overflow: auto;
     }
 
