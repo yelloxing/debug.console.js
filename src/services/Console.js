@@ -62,7 +62,7 @@ export default function (target) {
         content = content.message + " " + content.filename + " " + content.lineno + " \nstack :\n" + content.error.stack;
         target.trigger('console', {
             type: "error",
-            content
+            content:[content]
         });
     });
 
