@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-    import toString from '../services/toString.js';
+     import showData from '../services/showData.js';
     import '../styles/console.css';
 
     export default {
@@ -46,10 +46,11 @@
                     <i style='font-size:12px;color:black;font-style:normal;padding:5px;display:inline-block;width:50px;text-align:center;background-color:${color};margin-right:10px;'>
                         ${data.type}
                     </i>
-                    <div style='padding:10px 0;font-size:14px;line-height:2em;'>
-                        ${toString(data.content)}
-                    </div>`;
+                    <ol style='padding:10px 0;font-size:14px;line-height:2em;'></ol>`;
                 ul.appendChild(li);
+
+                // 辅助显示，对于对象，可以折叠
+                showData(this, li.getElementsByTagName('ol')[0], data.content);
 
             });
         }
