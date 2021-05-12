@@ -37,7 +37,7 @@
     "icrush-loader": "^0.2.1",
     "icrush-loader-plug": "^0.2.1",
     "icrush-style-loader": "^1.0.4",
-    "postcss": "^7.0.21",
+    "postcss": "^8.2.10",
     "postcss-loader": "^3.0.0",
     "url-loader": "^2.2.0",
     "webpack": "^4.41.2",
